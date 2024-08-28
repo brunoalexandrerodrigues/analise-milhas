@@ -67,38 +67,38 @@ edited_df = st.data_editor(
     use_container_width=True,
     hide_index=True,
     column_config={
-        "Tipo": st.column_config.SelectboxColumn(
+        "Tipo": st.data_editor.ColumnConfig(
             "Tipo",
             help="Tipo da Transação",
             options=["Compra", "Venda"],
             required=True
         ),
-        "Quantidade": st.column_config.NumberInputColumn(
+        "Quantidade": st.data_editor.ColumnConfig(
             "Quantidade",
             help="Quantidade de Milhas",
             min_value=1,
             required=True
         ),
-        "Preço Total": st.column_config.NumberInputColumn(
+        "Preço Total": st.data_editor.ColumnConfig(
             "Preço Total",
             help="Preço Total em Reais",
             min_value=0.0,
             step=0.01,
             required=True
         ),
-        "Preço por Milha": st.column_config.NumberInputColumn(
+        "Preço por Milha": st.data_editor.ColumnConfig(
             "Preço por Milha",
             help="Preço por Milha em Reais",
             min_value=0.0,
             step=0.01,
             required=True
         ),
-        "Data": st.column_config.DateInputColumn(
+        "Data": st.data_editor.ColumnConfig(
             "Data",
             help="Data da Transação",
             required=True
         ),
-        "Lucro por Milha": st.column_config.NumberInputColumn(
+        "Lucro por Milha": st.data_editor.ColumnConfig(
             "Lucro por Milha",
             help="Lucro por Milha em Reais",
             min_value=0.0,
