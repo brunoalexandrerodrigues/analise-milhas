@@ -66,33 +66,37 @@ st.dataframe(st.session_state.df, use_container_width=True)
 # Calcular lucro nas vendas registradas
 st.header("Análise de Lucro")
 if not st.session_state.df.empty:
-    df_vendas = st.session_state.df[st.session_state.df["Tipo"] == "Venda"]
+    # Verificar se a coluna "Tipo" existe antes de filtrar as vendas
+    if "Tipo" in st.session_state.df.columns:
+        df_vendas = st.session_state.df[st.session_state.df["Tipo"] == "Venda"]
 
-    for i, venda in df_vendas.iterrows():
-        # Seleciona as compras anteriores à venda para calcular o lucro
-        compras = st.session_state.df[
-            (st.session_state.df["Tipo"] == "Compra") &
-            (st.session_state.df["Data"] <= venda["Data"])
-        ]
+        for i, venda in df_vendas.iterrows():
+            # Seleciona as compras anteriores à venda para calcular o lucro
+            compras = st.session_state.df[
+                (st.session_state.df["Tipo"] == "Compra") &
+                (st.session_state.df["Data"] <= venda["Data"])
+            ]
 
-        if not compras.empty:
-            preco_medio_compra = compras["Preço por Milha"].mean()
-            lucro_por_milha = calcular_lucro_por_milha(preco_medio_compra, venda["Preço por Milha"])
-            st.session_state.df.at[i, "Lucro por Milha"] = lucro_por_milha
+            if not compras.empty:
+                preco_medio_compra = compras["Preço por Milha"].mean()
+                lucro_por_milha = calcular_lucro_por_milha(preco_medio_compra, venda["Preço por Milha"])
+                st.session_state.df.at[i, "Lucro por Milha"] = lucro_por_milha
 
-    # Atualiza o DataFrame com o lucro calculado
-    st.dataframe(st.session_state.df, use_container_width=True)
+        # Atualiza o DataFrame com o lucro calculado
+        st.dataframe(st.session_state.df, use_container_width=True)
 
-    # Gráfico de lucro por milha
-    lucro_chart = alt.Chart(st.session_state.df).mark_bar().encode(
-        x="Data:T",
-        y="Lucro por Milha:Q",
-        color="Tipo:N",
-        tooltip=["ID", "Quantidade", "Preço Total", "Lucro por Milha"]
-    ).properties(
-        title="Lucro por Milha ao Longo do Tempo"
-    )
+        # Gráfico de lucro por milha
+        lucro_chart = alt.Chart(st.session_state.df).mark_bar().encode(
+            x="Data:T",
+            y="Lucro por Milha:Q",
+            color="Tipo:N",
+            tooltip=["ID", "Quantidade", "Preço Total", "Lucro por Milha"]
+        ).properties(
+            title="Lucro por Milha ao Longo do Tempo"
+        )
 
-    st.altair_chart(lucro_chart, use_container_width=True)
+        st.altair_chart(lucro_chart, use_container_width=True)
+    else:
+        st.write("Nenhuma transação registrada ainda com a coluna 'Tipo'.")
 else:
     st.write("Nenhuma transação registrada ainda.")
