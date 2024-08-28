@@ -15,7 +15,6 @@ st.write(
 
 # Inicializa o DataFrame no estado da sessão
 if "df" not in st.session_state:
-    # Criação do DataFrame inicial com colunas básicas
     st.session_state.df = pd.DataFrame(columns=[
         "Tipo", "Quantidade", "Preço Total", "Preço por Milha", 
         "Data", "Lucro por Milha"
@@ -65,48 +64,7 @@ st.header("Transações Registradas")
 edited_df = st.data_editor(
     st.session_state.df,
     use_container_width=True,
-    hide_index=True,
-    column_config={
-        "Tipo": st.data_editor.ColumnConfig(
-            "Tipo",
-            help="Tipo da Transação",
-            options=["Compra", "Venda"],
-            required=True
-        ),
-        "Quantidade": st.data_editor.ColumnConfig(
-            "Quantidade",
-            help="Quantidade de Milhas",
-            min_value=1,
-            required=True
-        ),
-        "Preço Total": st.data_editor.ColumnConfig(
-            "Preço Total",
-            help="Preço Total em Reais",
-            min_value=0.0,
-            step=0.01,
-            required=True
-        ),
-        "Preço por Milha": st.data_editor.ColumnConfig(
-            "Preço por Milha",
-            help="Preço por Milha em Reais",
-            min_value=0.0,
-            step=0.01,
-            required=True
-        ),
-        "Data": st.data_editor.ColumnConfig(
-            "Data",
-            help="Data da Transação",
-            required=True
-        ),
-        "Lucro por Milha": st.data_editor.ColumnConfig(
-            "Lucro por Milha",
-            help="Lucro por Milha em Reais",
-            min_value=0.0,
-            step=0.01,
-            required=False
-        ),
-    },
-    key="transacoes"
+    hide_index=True
 )
 
 # Atualiza o DataFrame do estado da sessão
