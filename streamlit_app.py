@@ -17,7 +17,7 @@ st.write(
 if "df" not in st.session_state:
     # Criação do DataFrame inicial com colunas básicas
     st.session_state.df = pd.DataFrame(columns=[
-        "ID", "Tipo", "Quantidade", "Preço Total", "Preço por Milha", 
+        "Tipo", "Quantidade", "Preço Total", "Preço por Milha", 
         "Data", "Lucro por Milha"
     ])
 
@@ -42,7 +42,6 @@ with st.form("form_transacao"):
 
         # Registro da transação no DataFrame
         novo_registro = {
-            "ID": len(st.session_state.df) + 1,
             "Tipo": tipo,
             "Quantidade": quantidade,
             "Preço Total": preco_total,
@@ -90,7 +89,7 @@ if not st.session_state.df.empty:
             x="Data:T",
             y="Lucro por Milha:Q",
             color="Tipo:N",
-            tooltip=["ID", "Quantidade", "Preço Total", "Lucro por Milha"]
+            tooltip=["Quantidade", "Preço Total", "Lucro por Milha"]
         ).properties(
             title="Lucro por Milha ao Longo do Tempo"
         )
