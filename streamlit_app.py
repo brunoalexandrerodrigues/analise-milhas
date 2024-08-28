@@ -31,7 +31,7 @@ st.header("Adicionar Transação")
 # Formulário para adicionar compras ou vendas
 with st.form("form_transacao"):
     tipo = st.selectbox("Tipo de Transação", ["Compra", "Venda"])
-    quantidade = st.number_input("Quantidade de Milhas", min_value=1, step=100)
+    quantidade = st.number_input("Quantidade de Milhas", min_value=1, step=1)
     preco_total = st.number_input("Preço Total (R$)", min_value=0.0, step=0.01)
     data = st.date_input("Data da Transação", datetime.date.today())
     submit = st.form_submit_button("Registrar")
@@ -58,9 +58,59 @@ with st.form("form_transacao"):
 
         st.success(f"Transação de {tipo.lower()} registrada com sucesso!")
 
-# Mostra o DataFrame de transações
+# Seção para editar e mostrar transações
 st.header("Transações Registradas")
-st.dataframe(st.session_state.df, use_container_width=True)
+
+# Edita o DataFrame com st.data_editor
+edited_df = st.data_editor(
+    st.session_state.df,
+    use_container_width=True,
+    hide_index=True,
+    column_config={
+        "Tipo": st.column_config.SelectboxColumn(
+            "Tipo",
+            help="Tipo da Transação",
+            options=["Compra", "Venda"],
+            required=True
+        ),
+        "Quantidade": st.column_config.NumberInputColumn(
+            "Quantidade",
+            help="Quantidade de Milhas",
+            min_value=1,
+            required=True
+        ),
+        "Preço Total": st.column_config.NumberInputColumn(
+            "Preço Total",
+            help="Preço Total em Reais",
+            min_value=0.0,
+            step=0.01,
+            required=True
+        ),
+        "Preço por Milha": st.column_config.NumberInputColumn(
+            "Preço por Milha",
+            help="Preço por Milha em Reais",
+            min_value=0.0,
+            step=0.01,
+            required=True
+        ),
+        "Data": st.column_config.DateInputColumn(
+            "Data",
+            help="Data da Transação",
+            required=True
+        ),
+        "Lucro por Milha": st.column_config.NumberInputColumn(
+            "Lucro por Milha",
+            help="Lucro por Milha em Reais",
+            min_value=0.0,
+            step=0.01,
+            required=False
+        ),
+    },
+    key="transacoes"
+)
+
+# Atualiza o DataFrame do estado da sessão
+st.session_state.df = edited_df
 
 # Calcular lucro nas vendas registradas
 st.header("Análise de Lucro")
