@@ -30,7 +30,7 @@ st.header("Adicionar Transação")
 # Formulário para adicionar compras ou vendas
 with st.form("form_transacao"):
     tipo = st.selectbox("Tipo de Transação", ["Compra", "Venda"])
-    quantidade = st.number_input("Quantidade de Milhas", min_value=1, step=1)
+    quantidade = st.number_input("Quantidade de Milhas", min_value=1000, step=1)
     preco_total = st.number_input("Preço Total (R$)", min_value=0.0, step=0.01)
     data = st.date_input("Data da Transação", datetime.date.today())
     submit = st.form_submit_button("Registrar")
