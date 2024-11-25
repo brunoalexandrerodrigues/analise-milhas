@@ -4,8 +4,8 @@ import streamlit as st
 import altair as alt
 
 # Configurações iniciais do app
-st.set_page_config(page_title="Gerenciador de Milhas", page_icon="✈️")
-st.title("✈️ Gerenciador de Milhas")
+st.set_page_config(page_title="Minhas Milhas", page_icon="✈️")
+st.title("✈️ Minhas Milhas")
 st.write(
     """
     Este app permite gerenciar suas milhas de forma manual, registrando compras e vendas, 
